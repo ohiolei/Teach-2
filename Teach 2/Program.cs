@@ -14,13 +14,13 @@ namespace teach2
         public int Age { get; set; }
         public person(int id, string name, int age)
         {
-            ID = id;
+            ID= id;
             Name = name;
             Age = age;
         }
         public virtual void display()
         {
-            Console.WriteLine("ID: {0} Name: {1} Age: {2}", ID, Name, Age);
+           
         }
 
     }
@@ -30,11 +30,12 @@ namespace teach2
         public employee(int id, string name, int age, int wage) : base(id, name, age)
         {
             this.wage = wage;
+            
         }
 
         public override void display()
         {
-            Console.WriteLine("ID: {0} Name: {1} Age: {2} Wage: {3}", ID, Name, Age, wage);
+            
         }
     }
 
@@ -43,7 +44,7 @@ namespace teach2
 
         public programmer(int id, string name, int age, int wage) : base(id, name, age, wage)
         {
-
+            
         }
         public override void display()
         {
@@ -55,7 +56,7 @@ namespace teach2
     {
         public HR(int id, string name, int age, int wage) : base(id, name, age, wage)
         {
-
+            
         }
         public override void display()
         {
@@ -66,36 +67,43 @@ namespace teach2
     {
         public static void Main(string[] args)
         {
-
-            List<employee> human = new List<employee>();
-            Console.WriteLine("Number of Employees");
-            int noOfEmployee = Convert.ToInt32(Console.ReadLine());
-            if (human.Count == 0)
-            {
-                for (int i = 0; i < noOfEmployee; i++)
+            try{
+                List<employee> human = new List<employee>();
+                Console.WriteLine("Number of Employees");
+                int noOfEmployee = Convert.ToInt32(Console.ReadLine());
+                if (human.Count == 0)
                 {
-                    Console.WriteLine("press 1 for programmer and 2 for HR");
-                    int choice = Convert.ToInt32(Console.ReadLine());
-                    if (choice == 1)
+                    for (int i = 0; i < noOfEmployee; i++)
                     {
-                        programmer pr = new programmer(GetInt("enter ID"), GetString("enter name"), GetInt("enter age"), GetInt("enter wage"));
-                        human.Add(pr);
+                        Console.WriteLine("press 1 for programmer and 2 for HR");
+                        int choice = Convert.ToInt32(Console.ReadLine());
+                        if (choice == 1)
+                        {
+                            programmer pr = new programmer(GetInt("enter ID Number"), GetString("enter name"), GetInt("enter age"), GetInt("enter wage"));
+                            human.Add(pr);
 
-                    }
-                    if (choice == 2)
-                    {
-                        HR hr = new HR(GetInt("enter ID"), GetString("enter name"), GetInt("enter age"), GetInt("enter wage"));
-                        human.Add((hr));
+                        }
+                        if (choice == 2)
+                        {
+                            HR hr = new HR(GetInt("enter ID Number"), GetString("enter name"), GetInt("enter age"), GetInt("enter wage"));
+                            human.Add((hr));
+                        }
                     }
                 }
-            }
+                Console.WriteLine("display workers with wage greater than");
+                int Wage = Convert.ToInt32(Console.ReadLine());
+                IEnumerable<employee> employees = human.Where(h1 => h1.wage > Wage);
+               
 
-            IEnumerable<employee> employees = human.Where(h1 => h1.wage > 2000);
-            foreach (employee employee in employees)
+                foreach (employee employee in employees)
+                {
+                    employee.display();
+                }
+            }
+            catch (Exception ex)
             {
-                employee.display();
+                Console.WriteLine(ex);
             }
-
         }
 
         public static int GetInt(string prompt)
